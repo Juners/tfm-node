@@ -1,0 +1,23 @@
+{
+  "name": "node-app",
+  "version": "0.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "nodemon": "nodemon --watch src --ignore src/db.json ./src/app.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "core-js": "^3.23.3",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "lowdb": "^3.0.0",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.18",
+    "regenerator-runtime": "^0.13.9",
+    "socket.io": "^4.5.1"
+  }
+}

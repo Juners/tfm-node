@@ -1,0 +1,81 @@
+{
+  "users": [
+    "Javier",
+    "Ivan",
+    "Alex",
+    "Adrian",
+    "Marc",
+    "Sergi"
+  ],
+  "boards": {
+    "javier": {
+      "doneGen": false,
+      "generation": 8,
+      "outdated": false,
+      "user": "javier",
+      "TERRAFORMATION": {
+        "ammount": 175,
+        "generation": 0
+      },
+      "MONEY": {
+        "ammount": 18030,
+        "generation": 170
+      },
+      "STEEL": {
+        "ammount": 0,
+        "generation": 10
+      },
+      "TITANIUM": {
+        "ammount": 10,
+        "generation": 0
+      },
+      "PLANTS": {
+        "ammount": 0,
+        "generation": 0
+      },
+      "ENERGY": {
+        "ammount": 0,
+        "generation": 0
+      },
+      "HEAT": {
+        "ammount": 0,
+        "generation": 0
+      }
+    },
+    "ivan": {
+      "doneGen": false,
+      "generation": 8,
+      "outdated": false,
+      "user": "ivan",
+      "TERRAFORMATION": {
+        "ammount": 75,
+        "generation": 0
+      },
+      "MONEY": {
+        "ammount": 298,
+        "generation": -1
+      },
+      "STEEL": {
+        "ammount": 6,
+        "generation": 4
+      },
+      "TITANIUM": {
+        "ammount": 1,
+        "generation": 0
+      },
+      "PLANTS": {
+        "ammount": 5,
+        "generation": 1
+      },
+      "ENERGY": {
+        "ammount": 4,
+        "generation": 4
+      },
+      "HEAT": {
+        "ammount": 14,
+        "generation": 1
+      }
+    }
+  },
+  "generation": 10
+}
