@@ -9,17 +9,18 @@
   ],
   "boards": {
     "javier": {
-      "doneGen": false,
-      "generation": 8,
+      "doneGen": true,
+      "generation": 10,
       "outdated": false,
       "user": "javier",
+      "playerColor": "#FFE333",
       "TERRAFORMATION": {
         "ammount": 175,
         "generation": 0
       },
       "MONEY": {
         "ammount": 18030,
-        "generation": 170
+        "generation": 209
       },
       "STEEL": {
         "ammount": 0,
@@ -43,8 +44,9 @@
       }
     },
     "ivan": {
+      "playerColor": "#44AB7D",
       "doneGen": false,
-      "generation": 8,
+      "generation": 10,
       "outdated": false,
       "user": "ivan",
       "TERRAFORMATION": {
@@ -53,7 +55,7 @@
       },
       "MONEY": {
         "ammount": 298,
-        "generation": -1
+        "generation": -2
       },
       "STEEL": {
         "ammount": 6,

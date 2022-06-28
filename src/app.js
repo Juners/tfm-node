@@ -12,6 +12,7 @@ import {
   createBoard,
 } from "./db.js";
 import EventBus from "./EventBus.js";
+import { getLocalIp } from "./ip.js";
 
 const app = express();
 app.use(json());
@@ -29,9 +30,10 @@ app.use(function (err, req, res, next) {
 });
 
 const httpServer = createServer(app);
+const localIp = getLocalIp();
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: `http://${localIp}:3000`,
   },
 });
 
@@ -41,16 +43,16 @@ var port = 3001;
 
 app.get("/currentGeneration", async function (_req, res) {
   const gen = await readDb("generation");
-  res.status(200).json({ gen });
+  res.status(200).json(gen);
 });
 
 app.get("/boards", async function (_req, res) {
   const data = await readDb("boards");
   if (data) {
-    const nonEmptyBoards = Object.entries(data || {})
-      .filter(([_k, v]) => Object.keys(v).length)
-      .map(([k]) => k);
-    res.status(200).json(nonEmptyBoards);
+    const nonEmptyBoards = Object.entries(data || {}).filter(
+      ([_k, v]) => Object.keys(v).length
+    );
+    res.status(200).json(Object.fromEntries(nonEmptyBoards));
   } else {
     res.status(404).json({ error: "User not found" });
   }
@@ -181,15 +183,6 @@ EventBus.subscribe("playerFinishedGen", () => {
 io.on("connection", function (client) {
   console.log("Client connected");
 
-  client.on("join", function (data) {
-    console.log(data);
-  });
-
-  client.on("message", function (data) {
-    console.log(data);
-    client.emit("message", { data: "Hello from server" });
-  });
-
   EventBus.subscribe("boardUpdated", (data) => {
     client.emit("boardUpdated", { data });
   });
@@ -200,6 +193,7 @@ io.on("connection", function (client) {
 });
 
 httpServer.listen(port);
-console.log("\n\x1b[36m%s\x1b[0m\n", "App listening on port " + port);
+console.log("\n\x1b[36m%s\x1b[0m", "App listening on port " + port);
+console.log("\x1b[35m%s\x1b[0m\n", "App deployed on local IP: " + localIp);
 
 initializeDb();
