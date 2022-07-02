@@ -141,6 +141,48 @@ app.post("/users/:user/board/finishGen", async function (req, res) {
   }
 });
 
+app.post("/users/:user/board/endTurn", async function (req, res) {
+  const user = req.params.user;
+  const boards = Object.entries(await readDb("boards"));
+
+  // The user who finished the turn
+  const currentIndx = boards.findIndex(([k]) => k === user);
+
+  // The user which owns the turn now
+  let newIndx;
+  // We start checking the immedate next player on order
+  let i = currentIndx + 1 < boards.length ? currentIndx + 1 : 0;
+  let loops = 0;
+  do {
+    const player = boards[i][0];
+    if (!player.doneGen) newIndx = i;
+    i = i + 1 < boards.length ? i + 1 : 0;
+  } while (i !== currentIndx && !newIndx && ++loops < 20);
+
+  // Now we update everything together
+  const newTurnUser = boards[newIndx][0];
+  const didUpdatedNewTurn = await updateBoard(newTurnUser, {
+    ...boards[newIndx !== undefined ? newIndx : currentIndx][1],
+    ownTurn: true,
+  });
+  const didUpdatedUserBoard = await updateBoard(user, {
+    ...boards[currentIndx][1],
+    ownTurn: false,
+  });
+
+  EventBus.publish("playerFinishedTurn");
+  EventBus.publish("playerStartTurn", newTurnUser);
+
+  if (!didUpdatedUserBoard || !didUpdatedNewTurn) {
+    res.status(404).json({ error: "User not found" });
+  } else {
+    EventBus.publish("boardUpdated", { user: user });
+    EventBus.publish("boardUpdated", { user: newTurnUser });
+    const updatedBoard = await readDb("boards", user);
+    res.status(200).json(updatedBoard);
+  }
+});
+
 EventBus.subscribe("playerFinishedGen", () => {
   async function checkAllFinished() {
     const data = await readDb("boards");
